@@ -36,6 +36,8 @@ user_input = input("Enter: ")
 # excluded_letters = input("Please enter excluded letters: ")
 # remove_excluded_letters(excluded_letters)
 
+included_letters = input("Enter letters to be included")
+
 generate_potential_answers(user_input, guess)
 
 print("Potential answers:")
