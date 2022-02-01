@@ -1,7 +1,10 @@
 import enchant
 import string
 
+global alphabet, included_letters, user_input
 dictionary = enchant.Dict("en_US")
+playing = True
+number_of_attempts = 0
 keywords = []
 
 
@@ -36,18 +39,46 @@ def check_included_letters(answer):
     return True
 
 
-print("Please enter your current guess: some example inputs are 'r___t' or 'o_l__', "
-      "where the underscores are 'grey' squares and the letters are 'green' squares.")
+def display_potential_answers():
+    print("Potential answers:")
+    for guess in keywords:
+        print(guess)
 
-user_input = input("Enter: ")
 
-excluded_letters = list(input("Please enter excluded letters: "))
-alphabet = remove_excluded_letters(excluded_letters)
+def get_user_input():
+    global alphabet, included_letters, user_input
+    if number_of_attempts == 0:
+        user_input = get_current_guess()
+    get_excluded_letters()
+    get_included_letters()
 
-included_letters = list(input("Enter letters to be included: "))
 
-generate_potential_answers(user_input, "")
+def get_included_letters():
+    global included_letters
+    included_letters = list(input("Enter letters to be included: "))
+    print(included_letters)
 
-print("Potential answers:")
-for guess in keywords:
-    print(guess)
+
+def get_excluded_letters():
+    global alphabet
+    excluded_letters = list(input("Please enter excluded letters: "))
+    alphabet = remove_excluded_letters(excluded_letters)
+    print(alphabet)
+
+
+def get_current_guess():
+    global user_input
+    print("Please enter your current guess: ")
+    user_input = input("Enter: ")
+    return user_input
+
+
+while playing:
+    get_user_input()
+    generate_potential_answers(user_input, "")
+    display_potential_answers()
+    number_of_attempts += 1
+    continue_playing = input("Would you like to try again? (Y/N)")
+    if not continue_playing:
+        playing = False
+
