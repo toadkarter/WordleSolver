@@ -3,8 +3,6 @@ import string
 
 global alphabet, included_letters, user_input
 dictionary = enchant.Dict("en_US")
-playing = True
-number_of_attempts = 0
 keywords = []
 
 
@@ -47,8 +45,7 @@ def display_potential_answers():
 
 def get_user_input():
     global alphabet, included_letters, user_input
-    if number_of_attempts == 0:
-        user_input = get_current_guess()
+    user_input = get_current_guess()
     get_excluded_letters()
     get_included_letters()
 
@@ -56,14 +53,12 @@ def get_user_input():
 def get_included_letters():
     global included_letters
     included_letters = list(input("Enter letters to be included: "))
-    print(included_letters)
 
 
 def get_excluded_letters():
     global alphabet
     excluded_letters = list(input("Please enter excluded letters: "))
     alphabet = remove_excluded_letters(excluded_letters)
-    print(alphabet)
 
 
 def get_current_guess():
@@ -73,12 +68,6 @@ def get_current_guess():
     return user_input
 
 
-while playing:
-    get_user_input()
-    generate_potential_answers(user_input, "")
-    display_potential_answers()
-    number_of_attempts += 1
-    continue_playing = input("Would you like to try again? (Y/N)")
-    if not continue_playing:
-        playing = False
-
+get_user_input()
+generate_potential_answers(user_input, "")
+display_potential_answers()
